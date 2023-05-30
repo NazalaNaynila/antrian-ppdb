@@ -12,7 +12,7 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>No</th>
+              <th>No.</th>
               <th>Nama</th>
               <th>NISN</th>
               <th>Jalur Pendaftaran</th>
