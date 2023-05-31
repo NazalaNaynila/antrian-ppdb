@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\antrian;
 use App\Models\AntrianPpdb;
+use App\Models\Panggil;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session as FacadesSession;
@@ -68,8 +69,9 @@ class HomePageController extends Controller
      */
     public function show()
     {
-        $datas = AntrianPpdb::get();
-        return view('display');
+        $panggil = Panggil::orderBy('created_at', 'desc')->first();
+        $loket1 = Panggil::where('jalur', 'Zonasi')->orderBy('created_at', 'desc')->first();
+        return view('display', compact('panggil', 'loket1'));
     }
 
     /**

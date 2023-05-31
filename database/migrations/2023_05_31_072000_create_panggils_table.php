@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('antrian_ppdbs', function (Blueprint $table) {
+        Schema::create('panggils', function (Blueprint $table) {
             $table->id();
-            $table->string('NISN');
-            $table->string('Nama');
-            $table->string('Jalur_Pendaftaran');
-            $table->string('No_Telefon');
-            $table->string('Nomor_Antrian');
-            $table->boolean('status')->default(false);
+            $table->string("nama");
+            $table->string("jalur");
+            $table->string("no_antrian");
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('antrian_ppdbs');
+        Schema::dropIfExists('panggils');
     }
 };

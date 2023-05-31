@@ -38,3 +38,5 @@ Route::get('/operator/loket1/{id}/delete', [OperatorController::class, 'destroy'
 Route::get('/operator/loket2/{id}/delete', [OperatorController::class, 'destroy']);
 Route::get('/operator/loket3/{id}/delete', [OperatorController::class, 'destroy']);
 Route::get('/operator/loket4/{id}/delete', [OperatorController::class, 'destroy']);
+
+Route::get('/operator/panggil/{id}', [OperatorController::class, 'edit']);

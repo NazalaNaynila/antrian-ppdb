@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\antrian;
+use App\Models\antriann;
 use App\Models\AntrianPpdb;
+use App\Models\Panggil;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -79,7 +82,18 @@ class OperatorController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = AntrianPpdb::where("id", $id)->first();
+        $update = AntrianPpdb::where("id", $id)->update([
+            'status' => true
+        ]);
+        if ($update) {
+            $store = Panggil::create([
+                'nama' => $data->Nama,
+                'jalur' => $data->Jalur_Pendaftaran,
+                'no_antrian' => $data->Nomor_Antrian
+            ]);
+        }
+        return back();
     }
 
     /**

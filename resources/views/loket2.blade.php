@@ -33,6 +33,7 @@
               <td>{{ $data->No_Telefon }}</td>
               <td>
                 <a href="/operator/loket2/{{ $data->id }}/delete" id="btn-delete-post" class="btn btn-danger btn-sm">DELETE</a>
+                <a href="/operator/panggil/{{ $data->id }}" id="btn-delete-post" class="btn btn-success btn-sm">PANGGIL</a>
               </td>
             </tr>
             @endforeach

@@ -19,25 +19,40 @@
         <nav>
         </nav>
       </div> --}}
-      <div class="container-fluid text-center">
+      <div class="container-fluid">
         <div class="row py-2 border mb-4">
           <div class="col">
             <h1 class="text-center">DAFTAR ANTRIAN PPDB 2023/2024</h1>
           </div>
         </div>
+      </div>
+      
+      <div class="container text-center">
 
 
-        <div class="row px-3 row-cols-1 row-cols-md-3 g-5">
-          <div class="col-lg-6">
+
+        <div class="row row-cols-1 row-cols-md-2 g-5 mb-3">
+          <div class="col">
             <div class="card">
               <div style="background-color: #526D82; color:white;" class="card-header">
                 <b>NOMOR ANTRIAN</b>
               </div>
               <div class="card-body">
-                <h1 class="card-title" style="font-size: 150px;">5</h1>
+                <h1 class="card-title" style="font-size: 150px;">{{ $panggil->no_antrian }}</h1>
+                <h4>{{ $panggil->nama }}</h4>
               </div>
               <div style="background-color: #526D82; color:white;" class="card-header">
-                <b>LOKET 2</b>
+                <b>
+                @if($panggil->jalur == "Zonasi")
+                LOKET 1
+                @elseif($panggil->jalur == "Prestasi")
+                LOKET 2
+                @elseif($panggil->jalur == "Afirmasi")
+                LOKET 3
+                @elseif($panggil->jalur == "Perpindahan Orang Tua")
+                LOKET 4
+                @endif
+                </b>
               </div>
             </div>
           </div>
@@ -47,15 +62,16 @@
             </video>
           </div>
         </div>
-        <div class="container-fluid text-center">
-        <div class="row px-3 row-cols-1 row-cols-md-4 g-5">
+
+
+        <div class="row row-cols-1 row-cols-md-4 g-5">
           <div class="col">
             <div class="card">
               <div style="background-color: #526D82; color:white;" class="card-header">
                 <b>LOKET 1</b>
               </div>
               <div class="card-body">
-                <h1 class="card-title">1</h1>
+                <h1 class="card-title">{{ $loket1->no_antrian }}</h1>
               </div>
             </div>
           </div>
@@ -90,7 +106,9 @@
             </div>
           </div>
         </div>
+
       </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
   </body>
 </html>
