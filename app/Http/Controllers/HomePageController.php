@@ -71,7 +71,10 @@ class HomePageController extends Controller
     {
         $panggil = Panggil::orderBy('created_at', 'desc')->first();
         $loket1 = Panggil::where('jalur', 'Zonasi')->orderBy('created_at', 'desc')->first();
-        return view('display', compact('panggil', 'loket1'));
+        $loket2 = Panggil::where('jalur', 'Prestasi')->orderBy('created_at', 'desc')->first();
+        $loket3 = Panggil::where('jalur', 'Afirmasi')->orderBy('created_at', 'desc')->first();
+        $loket4 = Panggil::where('jalur', 'Perpindahan Orang Tua')->orderBy('created_at', 'desc')->first();
+        return view('display', compact('panggil', 'loket1', 'loket2', 'loket3', 'loket4'));
     }
 
     /**

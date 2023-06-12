@@ -19,6 +19,7 @@
               <th>Nomor Antrian</th>
               <th>Nomor Telepon</th>
               <th>Aksi</th>
+              <th>Waktu</th>
             </tr>
           </thead>
           <tbody>
@@ -32,7 +33,17 @@
               <td>{{ $data->Nomor_Antrian }}</td>
               <td>{{ $data->No_Telefon }}</td>
               <td>
-                <a href="/operator/loket4/{{ $data->id }}/delete" id="btn-delete-post" class="btn btn-danger btn-sm">DELETE</a>
+                @if($data->status == true)
+                <a href="/operator/panggil/{{ $data->id }}" id="btn-delete-post" class="btn btn-primary btn-sm">PANGGIL</a>
+                @else
+                <a href="/operator/panggil/{{ $data->id }}" id="btn-delete-post" class="btn btn-success btn-sm">PANGGIL</a>
+                @endif
+                <a href="/operator/loket1/{{ $data->id }}/delete" id="btn-delete-post" class="btn btn-danger btn-sm">DELETE</a>
+              </td>
+              <td>
+                @if($data->status == true)
+                {{ $data->updated_at->format('d-m-y h:i') }}
+                @endif
               </td>
             </tr>
             @endforeach
@@ -42,5 +53,21 @@
     </div>
   </div>
 {{-- END CONTENT --}}
+
+@if(session('playsound'))
+<div class="container mt-5">
+  <div class="row">
+    <div class="col">
+      <audio src="{{ asset('storage/suara_antrian/'. session('playsound')) }}" id="myAudio"></audio>
+    </div>
+  </div>
+</div>
+
+<script>
+  var audio = document.getElementById("myAudio");
+    audio.loop = false;
+    audio.play();
+</script>
+@endif
 
 @endsection

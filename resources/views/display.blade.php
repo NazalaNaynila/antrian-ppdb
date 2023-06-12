@@ -9,61 +9,59 @@
           font-family: 'Secular One';
       }
   </style>
-    <title>Antrian PPDB</title>
-    <!-- My CSS -->
-<link rel="stylesheet" type="text/css" href="{!! asset('storage/css/style.css') !!}">
+    <title>Display | Antrian PPDB</title>
+    <link rel="stylesheet" type="text/css" href="{!! asset('storage/css/style.css') !!}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   </head>
   <body>
-    {{-- <div class="border">
-        <nav>
-        </nav>
-      </div> --}}
-      <div class="container-fluid">
-        <div class="row py-2 border mb-4">
-          <div class="col">
-            <h1 class="text-center">DAFTAR ANTRIAN PPDB 2023/2024</h1>
-          </div>
+    <div class="container-fluid">
+      <div class="row py-2 border mb-2">
+        <div class="col">
+          <h1 class="text-center">DAFTAR ANTRIAN PPDB 2023/2024</h1>
         </div>
       </div>
+    </div>
       
       <div class="container text-center">
-
-
-
-        <div class="row row-cols-1 row-cols-md-2 g-5 mb-3">
+        <div class="row row-cols-1 row-cols-md-2 g-5 mb-2">
           <div class="col">
             <div class="card">
               <div style="background-color: #526D82; color:white;" class="card-header">
                 <b>NOMOR ANTRIAN</b>
               </div>
               <div class="card-body">
-                <h1 class="card-title" style="font-size: 150px;">{{ $panggil->no_antrian }}</h1>
-                <h4>{{ $panggil->nama }}</h4>
+                <h1 class="card-title" style="font-size: 150px;">
+                  {{-- {{ $panggil->no_antrian }} --}}
+                  <div id="counter"></div>
+                </h1>
+                <h4>
+                  <div id="counterName"></div>
+                  {{-- {{ $panggil->nama }}</h4> --}}
               </div>
               <div style="background-color: #526D82; color:white;" class="card-header">
                 <b>
-                @if($panggil->jalur == "Zonasi")
+                  <div id="counterJalur"></div>
+                {{-- if($panggil->jalur == "Zonasi")
                 LOKET 1
-                @elseif($panggil->jalur == "Prestasi")
+                elseif($panggil->jalur == "Prestasi")
                 LOKET 2
-                @elseif($panggil->jalur == "Afirmasi")
+                elseif($panggil->jalur == "Afirmasi")
                 LOKET 3
-                @elseif($panggil->jalur == "Perpindahan Orang Tua")
+                elseif($panggil->jalur == "Perpindahan Orang Tua")
                 LOKET 4
-                @endif
+                endif --}}
                 </b>
               </div>
             </div>
           </div>
+          {{-- VIDEO --}}
           <div class="col">
-            <video controls width="550">    
+            <video autoplay loop muted playsinline width="600">
               <source src="storage/img/video.mp4" type="video/mp4">
             </video>
           </div>
+          {{-- END VIDEO --}}
         </div>
-
-
         <div class="row row-cols-1 row-cols-md-4 g-5">
           <div class="col">
             <div class="card">
@@ -71,7 +69,14 @@
                 <b>LOKET 1</b>
               </div>
               <div class="card-body">
+                @if($loket1 != null)
                 <h1 class="card-title">{{ $loket1->no_antrian }}</h1>
+                @else
+                <h3 class="card-title">0</h3>
+                @endif
+              </div>
+              <div style="background-color: #526D82; color:white;" class="card-header">
+                <b>ZONASI</b>
               </div>
             </div>
           </div>
@@ -81,7 +86,14 @@
                 <b>LOKET 2</b>
               </div>
               <div class="card-body">
-                <h1 class="card-title">2</h1>
+                @if($loket2 != null)
+                <h1 class="card-title">{{ $loket2->no_antrian }}</h1>
+                @else
+                <h3 class="card-title">0</h3>
+                @endif
+              </div>
+              <div style="background-color: #526D82; color:white;" class="card-header">
+                <b>PRESTASI</b>
               </div>
             </div>
           </div>
@@ -91,7 +103,14 @@
                 <b>LOKET 3</b>
               </div>
               <div class="card-body">
-                <h1 class="card-title">3</h1>
+                @if($loket3 != null)
+                <h1 class="card-title">{{ $loket3->no_antrian }}</h1>
+                @else
+                <h3 class="card-title">0</h3>
+                @endif
+              </div>
+              <div style="background-color: #526D82; color:white;" class="card-header">
+                <b>AFIRMASI</b>
               </div>
             </div>
           </div>
@@ -101,13 +120,51 @@
                 <b>LOKET 4</b>
               </div>
               <div class="card-body">
-                <h1 class="card-title">4</h1>
+                @if($loket4 != null)
+                <h1 class="card-title">{{ $loket4->no_antrian }}</h1>
+                @else
+                <h3 class="card-title">0</h3>
+                @endif
+              </div>
+              <div style="background-color: #526D82; color:white;" class="card-header">
+                <b>PERPINDAHAN ORANG TUA</b>
               </div>
             </div>
           </div>
         </div>
-
       </div>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+      <script>
+        $(document).ready(function(){
+          setInterval(function() {
+            countAntrian()
+          }, 1000);
+        });
+
+        function countAntrian() {
+          $.ajax({
+            url: '/operator/count',
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+              if (data['jalur'] == 'Zonasi'){
+                var theJalur = 'LOKET 1';
+              } else if (data['jalur'] == 'Prestasi'){
+                var theJalur = 'LOKET 2';
+              } else if (data['jalur'] == 'Afirmasi'){
+                var theJalur = 'LOKET 3';
+              } else if (data['jalur'] == 'Perpindahan Orang Tua'){
+                var theJalur = 'LOKET 4';
+              }
+              $("#counter").empty().append(data['no_antrian']);
+              $("#counterName").empty().append(data['nama']);
+              $("#counterJalur").empty().append(theJalur);
+            }
+          });
+        }
+      </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
   </body>

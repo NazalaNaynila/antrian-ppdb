@@ -93,7 +93,9 @@ class OperatorController extends Controller
                 'no_antrian' => $data->Nomor_Antrian
             ]);
         }
-        return back();
+
+        $playsound = $data->Nomor_Antrian . '.mp3';
+        return back()->with('playsound', $playsound);
     }
 
     /**
@@ -118,5 +120,11 @@ class OperatorController extends Controller
         } else {
             return back()->with('error', 'Gagal menghapus data');
         }
+    }
+
+    public function count()
+    {
+        $data = Panggil::latest()->first();
+        return json_encode($data);
     }
 }
