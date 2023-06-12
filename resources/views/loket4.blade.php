@@ -57,7 +57,7 @@
 @if(session('playsound'))
 <div class="container mt-5">
   <div class="row">
-    <div class="col">
+    <div class="col-12">
       <audio src="{{ asset('storage/suara_antrian/'. session('playsound')) }}" id="myAudio"></audio>
     </div>
   </div>
